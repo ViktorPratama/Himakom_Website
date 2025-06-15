@@ -128,6 +128,10 @@ STATIC_URL = 'static/'
 # untuk produksi.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Direktori tempat `collectstatic` akan mengumpulkan semua file statis
+# untuk produksi.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
