@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block title %}Dokumentasi Kegiatan{% endblock %}
+
+{% block content %}
+  <h1>📸 Dokumentasi Kegiatan</h1>
+  <p>Berikut adalah dokumentasi dari kegiatan-kegiatan yang telah kami laksanakan.</p>
+  <hr>
+  <div class="row">
+    {% for doc in semua_dokumentasi %}
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <img src="{{ doc.foto_unggulan.url }}" class="card-img-top" alt="Dokumentasi {{ doc.event_terkait.nama_event }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ doc.judul_dokumentasi }}</h5>
+            <p class="card-text">{{ doc.deskripsi_singkat }}</p>
+            <a href="{{ doc.link_gdrive }}" class="btn btn-success" target="_blank">Lihat Album Lengkap (Google Drive)</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Belum ada dokumentasi yang dipublikasikan.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

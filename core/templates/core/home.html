@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Homepage - HIMAKOM{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Selamat Datang di Website HIMAKOM!</h1>
+    <p class="col-md-8 fs-4">Pusat informasi, kegiatan, dan dokumentasi Himpunan Mahasiswa Komputer & Informatika.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2><a href="{% url 'pengumuman_list' %}" class="text-decoration-none">📢 Pengumuman Terbaru</a></h2>
+    <hr>
+    {% for pengumuman in daftar_pengumuman %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ pengumuman.judul }}</h5>
+          <p class="card-text">{{ pengumuman.konten|truncatewords:20 }}</p>
+          <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
+        </div>
+        <div class="card-footer text-muted">
+          {{ pengumuman.tanggal_publikasi|date:"d F Y" }}
+        </div>
+      </div>
+    {% empty %}
+      <p>Belum ada pengumuman.</p>
+    {% endfor %}
+  </div>
+
+  <div class="col-md-6">
+    <h2><a href="{% url 'event_list' %}" class="text-decoration-none">🗓️ Event Mendatang</a></h2>
+    <hr>
+    {% for event in daftar_event %}
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ event.poster_event.url }}" class="img-fluid rounded-start" alt="{{ event.nama_event }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ event.nama_event }}</h5>
+              <p class="card-text"><small class="text-muted">{{ event.tanggal_mulai|date:"d F Y" }} - {{ event.lokasi }}</small></p>
+              <a href="#" class="btn btn-outline-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Tidak ada event yang akan datang.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

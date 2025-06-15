@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Daftar Pengumuman{% endblock %}
+
+{% block content %}
+<h1>Semua Pengumuman</h1>
+<hr>
+{% for p in semua_pengumuman %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ p.judul }}</h5>
+      <p class="card-text">{{ p.konten|truncatewords:30 }}</p>
+      <a href="{% url 'pengumuman_detail' p.pk %}" class="btn btn-primary">Baca Selengkapnya</a>
+    </div>
+    <div class="card-footer text-muted">
+      Dipublikasikan pada {{ p.tanggal_publikasi|date:"d F Y, H:i" }} oleh {{ p.penulis.username }}
+    </div>
+  </div>
+{% empty %}
+  <p>Tidak ada pengumuman untuk saat ini.</p>
+{% endfor %}
+{% endblock %}

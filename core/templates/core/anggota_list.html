@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Daftar Anggota HIMAKOM{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">Struktur Keanggotaan HIMAKOM</h1>
+
+  {% for bidang in semua_bidang %}
+    <div class="mb-5">
+      <h2 class="border-bottom pb-2 mb-3">{{ bidang.nama_bidang }}</h2>
+      <p class="lead">{{ bidang.deskripsi_bidang }}</p>
+      
+      <div class="row">
+        {% for anggota in bidang.anggota.all %}
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 text-center">
+              <img src="{{ anggota.foto_profil.url }}" class="card-img-top" alt="Foto {{ anggota.nama_lengkap }}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%; margin: 20px auto 0;">
+              <div class="card-body">
+                <h5 class="card-title">{{ anggota.nama_lengkap }}</h5>
+                <p class="card-text text-muted">{{ anggota.jabatan }}</p>
+                <a href="{% url 'anggota_detail' anggota.pk %}" class="btn btn-primary">Lihat Detail</a>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="col">
+            <p>Belum ada anggota di bidang ini.</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% empty %}
+    <p>Belum ada bidang atau anggota yang terdaftar.</p>
+  {% endfor %}
+</div>
+{% endblock %}

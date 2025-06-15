@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Profil {{ anggota.nama_lengkap }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="{{ anggota.foto_profil.url }}" class="img-fluid rounded-circle mb-3" alt="Foto {{ anggota.nama_lengkap }}" style="max-width: 250px;">
+        </div>
+        <div class="col-md-8">
+            <h1>{{ anggota.nama_lengkap }}</h1>
+            <p class="lead">{{ anggota.jabatan }}</p>
+            <hr>
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th scope="row" style="width: 150px;">NIM</th>
+                        <td>: {{ anggota.nim }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Angkatan</th>
+                        <td>: {{ anggota.angkatan }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Bidang</th>
+                        <td>: {{ anggota.bidang.nama_bidang }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>: {{ anggota.email|default:"Tidak ada" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="{% url 'anggota_list' %}" class="btn btn-secondary mt-3">Kembali ke Daftar Anggota</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

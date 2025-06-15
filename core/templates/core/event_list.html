@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% block title %}Daftar Event{% endblock %}
+
+{% block content %}
+  <h2>🗓️ Event Akan Datang</h2>
+  <hr>
+  <div class="row">
+    {% for event in event_mendatang %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="{{ event.poster_event.url }}" class="card-img-top" alt="{{ event.nama_event }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ event.nama_event }}</h5>
+            <p class="card-text">{{ event.deskripsi_event|truncatewords:15 }}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">{{ event.tanggal_mulai|date:"d M Y" }} di {{ event.lokasi }}</small>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Tidak ada event yang direncanakan.</p>
+    {% endfor %}
+  </div>
+
+  <h2 class="mt-5">📚 Arsip Event Selesai</h2>
+  <hr>
+  <div class="row">
+    {% for event in event_selesai %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="{{ event.poster_event.url }}" class="card-img-top" alt="{{ event.nama_event }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ event.nama_event }}</h5>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Telah dilaksanakan pada {{ event.tanggal_mulai|date:"d M Y" }}</small>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Belum ada arsip event.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
