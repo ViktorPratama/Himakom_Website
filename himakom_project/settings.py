@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,18 +22,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!3-4y33#fg$$y_t(uk-_)avjq!@*md3_des1t@cvbf1anx4%%-'
+# SECRET_KEY = 'django-insecure-!3-4y33#fg$$y_t(uk-_)avjq!@*md3_des1t@cvbf1anx4%%-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
+
+# Ganti baris SECRET_KEY yang lama dengan ini:
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!3-4y33#fg$$y_t(uk-_)avjq!@*md3_des1t@cvbf1anx4%%-')
+
+# Ganti baris DEBUG yang lama dengan ini:
+# Render akan mengatur variabel DEBUG menjadi 'False' atau '0'
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+
 
 
 ALLOWED_HOSTS = [
     'himakom-unipa.ac.id',          # Domain utama
     'www.himakom-unipa.ac.id',      # Domain dengan www
-    'himakom-website.onrender.com', # Domain dari Render
     '192.168.1.9',                    # Localhost
 ]
+# Ambil domain dari Render saat sudah online
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -80,6 +93,17 @@ WSGI_APPLICATION = 'himakom_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
+#database lama
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+#database baru
+# Hapus blok DATABASES yang lama dan ganti dengan ini:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,6 +111,9 @@ DATABASES = {
     }
 }
 
+# Cek jika variabel DATABASE_URL ada (disediakan oleh Render)
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -128,9 +155,6 @@ STATIC_URL = 'static/'
 # untuk produksi.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Direktori tempat `collectstatic` akan mengumpulkan semua file statis
-# untuk produksi.
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
