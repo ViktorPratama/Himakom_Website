@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!3-4y33#fg$$y_t(uk-_)avjq!@*md3_des1t@cvbf1anx4%%-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nama-domain-anda.com', 'nama-app-anda.onrender.com', '192.168.1.9', 'himakom-website.onrender.com']
 
 
 # Application definition
@@ -117,6 +118,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Direktori tempat `collectstatic` akan mengumpulkan semua file statis
+# untuk produksi.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
