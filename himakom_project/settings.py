@@ -39,8 +39,22 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = [
     'himakom-unipa.ac.id',          # Domain utama
     'www.himakom-unipa.ac.id',      # Domain dengan www
-    '192.168.1.9',                    # Localhost
+    '192.168.1.9',       
+    'localhost',
+    '127.0.0.1',
+    'm0zrvfgh-8080.asse.devtunnels.ms'
 ]
+
+# Tambahkan daftar origin/asal yang Anda percaya.
+# Pastikan menyertakan protokol (http://) dan port-nya.
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'https://m0zrvfgh-8080.asse.devtunnels.ms',
+    'http://192.168.1.9:8080'  # <-- Tambahkan ini
+    
+]
+
 # Ambil domain dari Render saat sudah online
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -66,6 +80,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'core.middleware.IPRestrictionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
