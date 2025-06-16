@@ -31,29 +31,29 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-!3-4y33#fg$$y_t(uk-_)avjq!@*md3_des1t@cvbf1anx4%%-')
 
 # Ganti baris DEBUG yang lama dengan ini:
-# Render akan mengatur variabel DEBUG menjadi 'False' atau '0'
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = 'RENDER' not in os.environ
 
 
 
-ALLOWED_HOSTS = [
-    'himakom-unipa.ac.id',          # Domain utama
-    'www.himakom-unipa.ac.id',      # Domain dengan www
-    '192.168.1.9',       
-    'localhost',
-    '127.0.0.1',
-    'm0zrvfgh-8080.asse.devtunnels.ms'
-]
+# ALLOWED_HOSTS = [
+#     'himakom-unipa.ac.id',          # Domain utama
+#     'www.himakom-unipa.ac.id',      # Domain dengan www
+#     '192.168.1.9',       
+#     'localhost',
+#     '127.0.0.1',
+#     'm0zrvfgh-8080.asse.devtunnels.ms'
+# ]
+ALLOWED_HOSTS = []
 
 # Tambahkan daftar origin/asal yang Anda percaya.
 # Pastikan menyertakan protokol (http://) dan port-nya.
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:8080',
-    'http://localhost:8080',
-    'https://m0zrvfgh-8080.asse.devtunnels.ms',
-    'http://192.168.1.9:8080'  # <-- Tambahkan ini
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://127.0.0.1:8080',
+#     'http://localhost:8080',
+#     'https://m0zrvfgh-8080.asse.devtunnels.ms',
+#     'http://192.168.1.9:8080'  # <-- Tambahkan ini
     
-]
+# ]
 
 # Ambil domain dari Render saat sudah online
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -76,6 +76,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # <-- TAMBAHKAN INI
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -119,11 +120,18 @@ WSGI_APPLICATION = 'himakom_project.wsgi.application'
 
 #database baru
 # Hapus blok DATABASES yang lama dan ganti dengan ini:
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3', # Fallback ke SQLite untuk lokal
+        conn_max_age=600
+    )
 }
 
 # Cek jika variabel DATABASE_URL ada (disediakan oleh Render)
@@ -165,11 +173,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Direktori tempat `collectstatic` akan mengumpulkan semua file statis
-# untuk produksi.
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+# Konfigurasi untuk WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
