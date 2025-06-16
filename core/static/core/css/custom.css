@@ -1,0 +1,10 @@
+/* core/static/core/css/custom.css */
+
+.profile-picture-detail {
+    width: 250px;       /* Lebar tetap */
+    height: 250px;      /* Tinggi tetap */
+    object-fit: cover;  /* Jaga proporsi gambar, potong jika perlu */
+    border-radius: 50%; /* Buat menjadi lingkaran sempurna */
+    border: 5px solid #f0f0f0; /* Tambahkan border putih keabuan */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Tambahkan efek bayangan halus */
+}
