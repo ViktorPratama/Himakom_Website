@@ -3,10 +3,10 @@
 {% block title %}Daftar Pengumuman{% endblock %}
 
 {% block content %}
-<h1>Semua Pengumuman</h1>
+<h1 data-aos="fade-down">Semua Pengumuman</h1>
 <hr>
 {% for p in semua_pengumuman %}
-  <div class="card mb-3">
+  <div class="card mb-3" data-aos="fade-up" data-aos-once="true">
     <div class="card-body">
       <h5 class="card-title">{{ p.judul }}</h5>
       <p class="card-text">{{ p.konten|truncatewords:30 }}</p>

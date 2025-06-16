@@ -3,16 +3,16 @@
 {% block title %}Profil {{ anggota.nama_lengkap }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" data-aos="fade-up" data-aos-once="true">
     <div class="row">
-        <div class="col-md-4 text-center">
+        <div class="col-md-4 text-center" data-aos="fade-right" data-aos-duration="1200">
             <img src="{{ anggota.foto_profil.url }}" class="img-fluid rounded-circle mb-3" alt="Foto {{ anggota.nama_lengkap }}" style="max-width: 250px;">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8" data-aos="fade-left" data-aos-duration="1200">
             <h1>{{ anggota.nama_lengkap }}</h1>
             <p class="lead">{{ anggota.jabatan }}</p>
             <hr>
-            <table class="table table-borderless">
+            <table class="table table-borderless" data-aos="fade-up" data-aos-once="true">
                 <tbody>
                     <tr>
                         <th scope="row" style="width: 150px;">NIM</th>
@@ -33,7 +33,7 @@
                 </tbody>
             </table>
 
-            <a href="{% url 'anggota_list' %}" class="btn btn-secondary mt-3">Kembali ke Daftar Anggota</a>
+            <a href="{% url 'anggota_list' %}" class="btn btn-secondary mt-3" data-aos="fade-up" data-aos-once="true">Kembali ke Daftar Anggota</a>
         </div>
     </div>
 </div>

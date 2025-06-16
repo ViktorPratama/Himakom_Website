@@ -2,11 +2,11 @@
 {% block title %}Daftar Event{% endblock %}
 
 {% block content %}
-  <h2>🗓️ Event Akan Datang</h2>
+  <h2 data-aos="fade-right">🗓️ Event Akan Datang</h2>
   <hr>
   <div class="row">
     {% for event in event_mendatang %}
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-once="true">
         <div class="card h-100">
           <img src="{{ event.poster_event.url }}" class="card-img-top" alt="{{ event.nama_event }}">
           <div class="card-body">
@@ -23,11 +23,11 @@
     {% endfor %}
   </div>
 
-  <h2 class="mt-5">📚 Arsip Event Selesai</h2>
+  <h2 class="mt-5" data-aos="fade-right">📚 Arsip Event Selesai</h2>
   <hr>
   <div class="row">
     {% for event in event_selesai %}
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-once="true">
         <div class="card h-100">
           <img src="{{ event.poster_event.url }}" class="card-img-top" alt="{{ event.nama_event }}">
           <div class="card-body">
